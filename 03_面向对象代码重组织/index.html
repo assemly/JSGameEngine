@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Engine Template</title>
+</head>
+<body>
+    <canvas id="GLCanvas" width="640" height="480">你浏览器不支持HTML5 Canvas</canvas>
+</body>
+</html>
+
+<script type="x-shader/x-vertex" id="VertexShader">
+    // this is the vertex shader 
+    attribute vec3 aSquareVertexPosition;  // Vertex shader expects one vertex position
+                    // naming convention, attributes always begin with "a"
+
+    void main(void) {
+        // Convert the vec3 into vec4 for scan conversion and
+        // assign to gl_Position to pass the vertex to the fragment shader
+        gl_Position = vec4(aSquareVertexPosition, 1.0); 
+    }
+    // End of vertex shader
+</script>
+
+<script type="x-shader/x-fragment" id="FragmentShader">
+    // this is the fragment (or pixel) shader
+    void main(void) {
+        // for every pixel called (within the square) sets
+        // constant color white with alpha-channel value of 1.0
+        gl_FragColor = vec4(1.0, 0.0, 1.0, 1.0);
+    }
+    // End of fragment/pixel shader
+</script> 

@@ -1,0 +1,67 @@
+export const MyGameMaterialControl = {
+    materialControl,
+    _selectMaterialChannel,
+    _printVec3,
+}
+function materialControl() {
+    const gEngine = this.gEngine
+    var delta = 0.01;
+    var msg = "";
+
+    // player select which object and material channgel to work 
+    this._selectMaterialChannel();
+
+    // manipulate the selected component Ambient, Diffuse, Specular
+    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.E)) {
+        this.mMaterialCh[0] += delta;
+    }
+    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.R)) {
+        this.mMaterialCh[0] -= delta;
+    }
+    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.T)) {
+        this.mMaterialCh[1] += delta;
+    }
+    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.Y)) {
+        this.mMaterialCh[1] -= delta;
+    }
+    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.U)) {
+        this.mMaterialCh[2] += delta;
+    }
+    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.I)) {
+        this.mMaterialCh[2] -= delta;
+    }
+
+    // shinningess
+    var mat = this.mSlectedCh.getRenderable().getMaterial();
+    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.O)) {
+        mat.setShininess(mat.getShininess() + delta);
+    }
+    if (gEngine.Input.isKeyPressed(gEngine.Input.keys.P)) {
+        mat.setShininess(mat.getShininess() - delta);
+    }
+
+    msg += "n(" + mat.getShininess().toPrecision(2) + ")" +
+        this._printVec3("D", mat.getDiffuse()) +
+        this._printVec3("S", mat.getSpecular()) +
+        this._printVec3("A", mat.getAmbient());
+
+    return msg;
+};
+
+function _selectMaterialChannel() {
+    const gEngine = this.gEngine
+    // select which character to work with
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Seven)) {
+        this.mMaterialCh = this.mSlectedCh.getRenderable().getMaterial().getAmbient();
+    }
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Eight)) {
+        this.mMaterialCh = this.mSlectedCh.getRenderable().getMaterial().getDiffuse();
+    }
+    if (gEngine.Input.isKeyClicked(gEngine.Input.keys.Nine)) {
+        this.mMaterialCh = this.mSlectedCh.getRenderable().getMaterial().getSpecular();
+    }
+};
+
+function _printVec3(msg, p) {
+    return msg + "(" + p[0].toPrecision(2) + " " + p[1].toPrecision(2) + " " + p[2].toPrecision(2) + ") ";
+};
